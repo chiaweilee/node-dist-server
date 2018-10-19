@@ -1,0 +1,33 @@
+{
+  "name": "rundist",
+  "version": "0.0.1-ILOVENANA",
+  "description": "run your dist!",
+  "main": "bin/dist-server.js",
+  "bin": {
+    "rundist": "bin/dist-server.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.3",
+    "express": "^4.16.4",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiaweilee/rundist.git"
+  },
+  "keywords": [
+    "dist"
+  ],
+  "author": "+v",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chiaweilee/rundist/issues"
+  },
+  "homepage": "https://github.com/chiaweilee/rundist#readme"
+}
