@@ -29,7 +29,7 @@ npm run dist
 
 ```js
 "scripts": {
-    "dist": "rundist --port 8080 -dirname dist -index index.html"
+    "dist": "rundist --port 8080 --dirname dist --index index.html"
   }
 ```
 
