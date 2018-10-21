@@ -1,6 +1,6 @@
 {
   "name": "rundist",
-  "version": "0.0.1-ILOVENANA",
+  "version": "0.0.2-ILoveNana",
   "description": "run your dist!",
   "main": "bin/dist-server.js",
   "bin": {

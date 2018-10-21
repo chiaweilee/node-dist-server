@@ -15,7 +15,7 @@ npm install rundist
 
 *package.json add:*
 
-```json
+```js
 "scripts": {
     "dist": "rundist"
   }
@@ -23,6 +23,14 @@ npm install rundist
 
 ```
 npm run dist
+```
+
+### Custom argv
+
+```js
+"scripts": {
+    "dist": "rundist --port 8080 -dirname dist -index index.html"
+  }
 ```
 
 ### support
