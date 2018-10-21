@@ -38,7 +38,7 @@ npm run dist
 - support 'dist' floder in your project
 - default index file name: index.html
 - default host: http://localhost
-- default port: 3003
+- default port: 3000
 - support .css .gif .html .ico .jpeg .jpg .js .json .png .svg .tiff .txt .xml
 - support Vue history mode
 - **not support hot load**
