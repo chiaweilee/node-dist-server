@@ -73,8 +73,8 @@ app.get('*', function (request, response) {
         response.send(err)
         return
       }
-      response.writeHead(200, { 'content-type': mimeType[ext][0] || 'text/plain' })
-      response.write(data, mimeType[ext][1])
+      response.writeHead(200, { 'content-type': (mimeType[ext] && mimeType[ext][0]) || 'text/plain' })
+      response.write(data, (mimeType[ext] && mimeType[ext][1]) || 'utf8')
       response.end()
     })
   }
