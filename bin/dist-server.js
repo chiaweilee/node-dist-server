@@ -36,19 +36,19 @@ const http = require('http').Server(app)
 const fs = require('fs')
 const resolve = _ => path.resolve(__dirname, _)
 const mimeType = {
-  'css': ['text/css', 'utf8'],
-  'gif': ['image/gif', 'binary'],
-  'html': ['text/html', 'utf8'],
-  'ico': ['image/x-icon', 'binary'],
-  'jpeg': ['image/jpeg', 'binary'],
-  'jpg': ['image/jpeg', 'binary'],
-  'js': ['text/javascript', 'utf8'],
-  'json': ['application/json', 'utf8'],
-  'png': ['image/png', 'binary'],
-  'svg': ['image/svg+xml', 'binary'],
-  'tiff': ['image/tiff', 'binary'],
-  'txt': ['text/plain', 'utf8'],
-  'xml': ['text/xml', 'utf8']
+  'css': ['text/css', 'utf8', 'max-age=31536000'],
+  'gif': ['image/gif', 'binary', 'max-age=86400'],
+  'html': ['text/html', 'utf8', 'no-cache'],
+  'ico': ['image/x-icon', 'binary', 'max-age=86400'],
+  'jpeg': ['image/jpeg', 'binary', 'max-age=86400'],
+  'jpg': ['image/jpeg', 'binary', 'max-age=86400'],
+  'js': ['text/javascript', 'utf8', 'private, max-age=31536000'],
+  'json': ['application/json', 'utf8', 'private, max-age=31536000'],
+  'png': ['image/png', 'binary', 'max-age=86400'],
+  'svg': ['image/svg+xml', 'binary', 'max-age=86400'],
+  'tiff': ['image/tiff', 'binary', 'max-age=86400'],
+  'txt': ['text/plain', 'utf8', 'max-age=86400'],
+  'xml': ['text/xml', 'utf8', 'max-age=86400']
 }
 
 app.get('*', function (request, response) {
@@ -73,7 +73,10 @@ app.get('*', function (request, response) {
         response.send(err)
         return
       }
-      response.writeHead(200, { 'content-type': (mimeType[ext] && mimeType[ext][0]) || 'text/plain' })
+      response.writeHead(200, {
+        'Cache-Control': (mimeType[ext] && mimeType[ext][2]) || 'no-cache',
+        'content-type': (mimeType[ext] && mimeType[ext][0]) || 'text/plain'
+      })
       response.write(data, (mimeType[ext] && mimeType[ext][1]) || 'utf8')
       response.end()
     })
