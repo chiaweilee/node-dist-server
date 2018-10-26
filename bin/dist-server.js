@@ -53,7 +53,7 @@ const mimeType = {
 
 app.get('*', function (request, response) {
   const url = request.originalUrl !== '/' ? request.originalUrl : `/${option.defaultPage}`
-  const ext = (() => /\.([a-zA-Z0-9]+)$/gi.exec(url.split('?')[0]) || [])()[1]
+  const [, name, ext] = (() => /\/([^/]+)\.([a-zA-Z0-9]+)$/gi.exec(url.split('?')[0]) || [])()
   const redirect = function (url, rewrite = false) {
     fs.readFile(resolve(url), function (err, data) {
       if (err) {
@@ -74,7 +74,7 @@ app.get('*', function (request, response) {
         return
       }
       response.writeHead(200, {
-        'Cache-Control': (mimeType[ext] && mimeType[ext][2]) || 'no-cache',
+        'Cache-Control': (!(name === 'service-worker' && ext === 'js') && mimeType[ext][2]) || 'no-cache',
         'content-type': (mimeType[ext] && mimeType[ext][0]) || 'text/plain'
       })
       response.write(data, (mimeType[ext] && mimeType[ext][1]) || 'utf8')
