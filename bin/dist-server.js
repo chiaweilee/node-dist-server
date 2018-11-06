@@ -53,7 +53,14 @@ const mimeType = {
   'svg': ['image/svg+xml', 'binary', 'max-age=86400'],
   'tiff': ['image/tiff', 'binary', 'max-age=86400'],
   'txt': ['text/plain', 'utf8', 'max-age=86400'],
-  'xml': ['text/xml', 'utf8', 'max-age=86400']
+  'xml': ['text/xml', 'utf8', 'max-age=86400'],
+  'flv': ['video/x-flv', 'binary', 'max-age=86400'],
+  'mp4': ['video/mp4', 'binary', 'max-age=86400'],
+  'm3u8': ['application/x-mpegURL', 'binary', 'max-age=86400'],
+  'ts': ['video/MP2T', 'binary', 'max-age=86400'],
+  '3gp': ['video/MP2T', 'binary', 'max-age=86400'],
+  'mov': ['video/quicktime', 'binary', 'max-age=86400'],
+  'wmv': ['video/x-ms-wmv', 'binary', 'max-age=86400'],
 }
 
 app.get('*', function (request, response) {
@@ -79,7 +86,7 @@ app.get('*', function (request, response) {
         return
       }
       response.writeHead(200, {
-        'Cache-Control': (!(name === 'service-worker' && ext === 'js') && mimeType[ext][2]) || 'no-cache',
+        'Cache-Control': (!(name === 'service-worker' && ext === 'js') && mimeType[ext] && mimeType[ext][2]) || 'no-cache',
         'content-type': (mimeType[ext] && mimeType[ext][0]) || 'text/plain'
       })
       response.write(data, (mimeType[ext] && mimeType[ext][1]) || 'utf8')
