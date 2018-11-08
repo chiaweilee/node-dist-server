@@ -2,16 +2,11 @@
 
 const consola = require('consola')
 const ip = require('ip')
-const request = require('request')
 const options = require('./option')
 const { app, http } = require('./app')
 const mimeType = require('./mime-type')
 const { resolve, readFile } = require('./utils')
 const { name, version } = require('../package')
-
-app.head('*', function (request) {
-  consola.success(`Listen at http://${request.headers.host}`)
-})
 
 app.get('*', function (request, response) {
   const url = request.originalUrl !== '/' ? request.originalUrl : `/${options.defaultPage}`
@@ -48,8 +43,6 @@ app.get('*', function (request, response) {
 
 http.listen(options.httpPort, function () {
   consola.info(`🚀 ${name} ${version}`)
-
-  // test
-  request.head(`http://localhost:${options.httpPort}/`)
-  request.head(`http://${ip.address()}:${options.httpPort}/`)
+  consola.success(`Listen at http://localhost:${options.httpPort}/`)
+  consola.success(`Listen at http://${ip.address()}:${options.httpPort}/`)
 })
