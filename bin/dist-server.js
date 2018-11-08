@@ -51,6 +51,5 @@ http.listen(options.httpPort, function () {
 
   // test
   request.head(`http://localhost:${options.httpPort}/`)
-  request.head(`http://0.0.0.0:${options.httpPort}/`)
   request.head(`http://${ip.address()}:${options.httpPort}/`)
 })
