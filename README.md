@@ -27,11 +27,23 @@ npm run dist
 
 ### Custom argv
 
+⚠️ `--dirname` changed
+
 ```js
 "scripts": {
     "dist": "rundist --port 8080 --dirname dist --index index.html"
   }
 ```
+
+##### --dir / --dirname
+
+the default value of `--dir` is `../../../dist/`
+`--dirname dist` equal to `../../../dist/`
+
+rundist locate at `node_module/bin/rundist/`. for visit your project,
+please use `../../../${dirname}`
+
+do not use --dir and --dirname at same time.
 
 ### support
 

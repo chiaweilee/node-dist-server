@@ -1,77 +1,27 @@
 #!/usr/bin/env node
 
-const option = {
-  httpPort: 3000,
-  defaultPage: 'index.html',
-  distPath: '../../../dist/'
-}
-const argv = process.argv.slice(2)
-argv.forEach((arg, i) => {
-  const next = argv[i + 1]
-  switch (arg) {
-    case '--port':
-      if (!isNaN(argv[i + 1])) {
-        option.httpPort = next
-      }
-      break
-    case '--dirname':
-      if (next) {
-        option.distPath = next
-      }
-      break
-    case '--index':
-      if (next) {
-        option.defaultPage = next
-      }
-      break
-    default:
-      break
-  }
+const consola = require('consola')
+const ip = require('ip')
+const request = require('request')
+const options = require('./option')
+const { app, http } = require('./app')
+const mimeType = require('./mime-type')
+const { resolve, readFile } = require('./utils')
+const { name, version } = require('../package')
+
+app.head('*', function (request) {
+  consola.success(`Listen at http://${request.headers.host}`)
 })
-const compression = require('compression')
-const path = require('path')
-const app = require('express')()
-app.use(compression())
-const http = require('http').Server(app)
-const fs = require('fs')
-const resolve = _ => path.resolve(__dirname, _)
-const mimeType = {
-  'css': ['text/css', 'utf8', 'max-age=31536000'],
-  'gif': ['image/gif', 'binary', 'max-age=86400'],
-  'html': ['text/html', 'utf8', 'no-cache'],
-  'ico': ['image/x-icon', 'binary', 'max-age=86400'],
-  'jpeg': ['image/jpeg', 'binary', 'max-age=86400'],
-  'jpg': ['image/jpeg', 'binary', 'max-age=86400'],
-  'js': ['text/javascript', 'utf8', 'private, max-age=31536000'],
-  'json': ['application/json', 'utf8', 'private, max-age=31536000'],
-  'woff': ['application/x-font-woff', 'binary', 'private, max-age=31536000'],
-  'woff2': ['application/x-font-woff', 'binary', 'private, max-age=31536000'],
-  'eot': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
-  'otf': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
-  'ttf': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
-  'png': ['image/png', 'binary', 'max-age=86400'],
-  'svg': ['image/svg+xml', 'binary', 'max-age=86400'],
-  'tiff': ['image/tiff', 'binary', 'max-age=86400'],
-  'txt': ['text/plain', 'utf8', 'max-age=86400'],
-  'xml': ['text/xml', 'utf8', 'max-age=86400'],
-  'flv': ['video/x-flv', 'binary', 'max-age=86400'],
-  'mp4': ['video/mp4', 'binary', 'max-age=86400'],
-  'm3u8': ['application/x-mpegURL', 'binary', 'max-age=86400'],
-  'ts': ['video/MP2T', 'binary', 'max-age=86400'],
-  '3gp': ['video/MP2T', 'binary', 'max-age=86400'],
-  'mov': ['video/quicktime', 'binary', 'max-age=86400'],
-  'wmv': ['video/x-ms-wmv', 'binary', 'max-age=86400'],
-}
 
 app.get('*', function (request, response) {
-  const url = request.originalUrl !== '/' ? request.originalUrl : `/${option.defaultPage}`
+  const url = request.originalUrl !== '/' ? request.originalUrl : `/${options.defaultPage}`
   const [, name, ext] = (() => /\/([^/]+)\.([a-zA-Z0-9]+)$/gi.exec(url.split('?')[0]) || [])()
-  const redirect = function (url, rewrite = false) {
-    fs.readFile(resolve(url), function (err, data) {
+  const redirect = function (url) {
+    readFile(resolve(url), function (err, data) {
       if (err) {
         if (err.code === 'ENOENT') {
           // try url rewrite for vue-router history mode
-          fs.readFile(resolve(`${option.distPath}${option.defaultPage}`), function (err, data) {
+          readFile(resolve(`${options.distPath}${options.defaultPage}`), function (err, data) {
             if (err) {
               response.send(err)
               return
@@ -93,9 +43,14 @@ app.get('*', function (request, response) {
       response.end()
     })
   }
-  redirect(`${option.distPath}${url}`, (mimeType[ext] || [])[1])
+  redirect(`${options.distPath}${url}`, (mimeType[ext] || [])[1])
 })
 
-http.listen(option.httpPort, function () {
-  console.log(`> Listening on *:${option.httpPort}`)
+http.listen(options.httpPort, function () {
+  consola.info(`🚀 ${name} ${version}`)
+
+  // test
+  request.head(`http://localhost:${options.httpPort}/`)
+  request.head(`http://0.0.0.0:${options.httpPort}/`)
+  request.head(`http://${ip.address()}:${options.httpPort}/`)
 })

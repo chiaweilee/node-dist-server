@@ -1,6 +1,6 @@
 {
   "name": "rundist",
-  "version": "0.0.7-ILoveNana",
+  "version": "0.1.0",
   "description": "run your dist!",
   "main": "bin/dist-server.js",
   "bin": {
@@ -8,14 +8,17 @@
   },
   "dependencies": {
     "compression": "^1.7.3",
+    "consola": "^2.2.3",
     "express": "^4.16.4",
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
-    "path": "^0.12.7"
+    "ip": "^1.1.5",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node bin/dist-server.js --dir ../test"
   },
   "repository": {
     "type": "git",
