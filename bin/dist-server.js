@@ -8,10 +8,15 @@ const mimeType = require('./mime-type')
 const { resolve, readFile } = require('./utils')
 const { name, version } = require('../package')
 
+consola.info(`🚀 ${name} ${version}`)
+
 if (options.extendPath) {
   const extend = require(options.extendPath)
   if (typeof extend === 'function') {
+    consola.success(`extend load success at ${options.extendPath}`)
     extend(app)
+  } else {
+    consola.error(`extend load fail at ${options.extendPath}, 'module.exports' must be a function`)
   }
 }
 
@@ -49,7 +54,6 @@ app.get('*', function (request, response) {
 })
 
 http.listen(options.httpPort, function () {
-  consola.info(`🚀 ${name} ${version}`)
   consola.success(`Listen at http://localhost:${options.httpPort}/`)
   consola.success(`Listen at http://${ip.address()}:${options.httpPort}/`)
 })

@@ -1,6 +1,6 @@
 {
   "name": "rundist",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "run your dist!",
   "main": "bin/dist-server.js",
   "bin": {
@@ -13,12 +13,12 @@
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
     "ip": "^1.1.5",
+    "joi": "^14.3.0",
     "path": "^0.12.7",
     "request": "^2.88.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "node bin/dist-server.js --dir ../test"
+    "test": "node bin/dist-server.js --dir test --extend test/extend.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/chiaweilee/rundist/issues"
   },
-  "homepage": "https://github.com/chiaweilee/rundist#readme"
+  "homepage": "https://github.com/chiaweilee/rundist#readme",
+  "devDependencies": {
+    "eslint": "^5.9.0"
+  }
 }
