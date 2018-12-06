@@ -29,6 +29,11 @@ argv.forEach((arg, i) => {
         options.defaultPage = next
       }
       break
+    case '--extend':
+      if (next) {
+        options.extendPath = next
+      }
+      break
     default:
       break
   }
