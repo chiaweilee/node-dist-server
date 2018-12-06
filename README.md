@@ -51,8 +51,10 @@ script path to extend the server
 
 default `undefined`
 
+e.g: `rundist --extend script/app-wathch-git.js`
+
 ```JavaScript
-// script/app-watch-git.j
+// script/app-watch-git.js
 module.exports = function (app) {
   app.post('/', function () {
     // ...
