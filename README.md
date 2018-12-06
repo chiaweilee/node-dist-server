@@ -27,30 +27,72 @@ npm run dist
 
 ### Custom argv
 
-⚠️ `--dirname` changed
-
 ```js
 "scripts": {
-    "dist": "rundist --port 8080 --dirname dist --index index.html"
+    "dist": "rundist --port 8080 --dirname dist --index index.html --extend script/app-watch-git.js"
   }
 ```
 
-##### --dir / --dirname
+#### --port
 
-the default value of `--dir` is `../../../dist/`
-`--dirname dist` equal to `../../../dist/`
+default `3000`
 
-rundist locate at `node_module/bin/rundist/`. for visit your project,
-please use `../../../${dirname}`
+#### --index
 
-do not use --dir and --dirname at same time.
+default `index.html`
 
-### support
+#### --dir / --dirname
 
-- support 'dist' floder in your project
-- default index file name: index.html
-- default host: http://localhost
-- default port: 3000
-- support .css .gif .html .ico .jpeg .jpg .js .json .png .svg .tiff .txt .xml
-- support Vue history mode
-- **not support hot load**
+default to path `dist`
+
+#### --extend
+
+script path to extend the server
+
+default `undefined`
+
+```JavaScript
+// script/app-watch-git.j
+module.exports = function (app) {
+  app.post('/', function () {
+    // ...
+  })
+}
+```
+
+#### compression
+
+`support`
+
+#### mime-type & expired
+
+```JavaScript
+  'css': ['text/css', 'utf8', 'max-age=31536000'],
+  'gif': ['image/gif', 'binary', 'max-age=86400'],
+  'html': ['text/html', 'utf8', 'no-cache'],
+  'ico': ['image/x-icon', 'binary', 'max-age=86400'],
+  'jpeg': ['image/jpeg', 'binary', 'max-age=86400'],
+  'jpg': ['image/jpeg', 'binary', 'max-age=86400'],
+  'js': ['text/javascript', 'utf8', 'private, max-age=31536000'],
+  'json': ['application/json', 'utf8', 'private, max-age=31536000'],
+  'woff': ['application/x-font-woff', 'binary', 'private, max-age=31536000'],
+  'woff2': ['application/x-font-woff', 'binary', 'private, max-age=31536000'],
+  'eot': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
+  'otf': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
+  'ttf': ['application/octet-stream', 'binary', 'private, max-age=31536000'],
+  'png': ['image/png', 'binary', 'max-age=86400'],
+  'svg': ['image/svg+xml', 'binary', 'max-age=86400'],
+  'tiff': ['image/tiff', 'binary', 'max-age=86400'],
+  'txt': ['text/plain', 'utf8', 'max-age=86400'],
+  'xml': ['text/xml', 'utf8', 'max-age=86400'],
+  'flv': ['video/x-flv', 'binary', 'max-age=86400'],
+  'mp4': ['video/mp4', 'binary', 'max-age=86400'],
+  'm3u8': ['application/x-mpegURL', 'binary', 'max-age=86400'],
+  'ts': ['video/MP2T', 'binary', 'max-age=86400'],
+  '3gp': ['video/MP2T', 'binary', 'max-age=86400'],
+  'mov': ['video/quicktime', 'binary', 'max-age=86400'],
+  'wmv': ['video/x-ms-wmv', 'binary', 'max-age=86400']
+```
+#### hot-load
+
+`not support yet`
