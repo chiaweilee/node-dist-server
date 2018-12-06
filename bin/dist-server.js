@@ -8,6 +8,13 @@ const mimeType = require('./mime-type')
 const { resolve, readFile } = require('./utils')
 const { name, version } = require('../package')
 
+if (options.extendPath) {
+  const extend = require(options.extendPath)
+  if (typeof extend === 'function') {
+    extend(app)
+  }
+}
+
 app.get('*', function (request, response) {
   const url = request.originalUrl !== '/' ? request.originalUrl : `/${options.defaultPage}`
   const [, name, ext] = (() => /\/([^/]+)\.([a-zA-Z0-9]+)$/gi.exec(url.split('?')[0]) || [])()
