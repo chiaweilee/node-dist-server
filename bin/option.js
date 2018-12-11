@@ -5,14 +5,20 @@ const schema = joi.object().keys({
   httpPort: joi.number().port(),
   distPath: joi.string(),
   defaultPage: joi.string(),
-  extendPath: joi.any()
+  extendPath: joi.any(),
+  https: joi.boolean(),
+  sslKey: joi.any(),
+  sslCert: joi.any()
 })
 
 const options = {
   httpPort: 3000,
   distPath: path.resolve('./dist/'),
   defaultPage: 'index.html',
-  extendPath: undefined
+  extendPath: undefined,
+  https: false,
+  sslKey: undefined,
+  sslCert: undefined
 }
 
 const argv = process.argv.slice(2)
@@ -45,6 +51,19 @@ argv.forEach((arg, i) => {
         options.extendPath = path.resolve(next)
       }
       break
+    case '--https':
+      options.https = true
+      break
+    case '--sslkey':
+      if (next) {
+        options.sslKey = path.resolve(next)
+      }
+      break
+    case '--sslcert':
+      if (next) {
+        options.sslCert = path.resolve(next)
+      }
+      break
     default:
       break
   }
@@ -52,7 +71,7 @@ argv.forEach((arg, i) => {
 
 joi.validate(options, schema, function (err) {
   if (err) {
-    process.stderr.output(err)
+    process.stderr.write(err)
     process.exit(1)
   }
 })

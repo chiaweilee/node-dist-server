@@ -1,6 +1,6 @@
 {
   "name": "rundist",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "run your dist!",
   "main": "bin/dist-server.js",
   "bin": {
@@ -18,7 +18,7 @@
     "request": "^2.88.0"
   },
   "scripts": {
-    "test": "node bin/dist-server.js --dir test --extend test/extend.js"
+    "test": "node bin/dist-server.js --dir test --port 443 --extend test/extend.js --https --sslkey cert/localhost.key --sslcert cert/localhost.cert"
   },
   "repository": {
     "type": "git",

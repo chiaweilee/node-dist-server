@@ -1,3 +1,1 @@
-module.exports = function (app) {
-  console.log(typeof app === 'function')
-}
+module.exports = function (app) {}

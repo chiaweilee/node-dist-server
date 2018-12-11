@@ -3,12 +3,9 @@
 const consola = require('consola')
 const ip = require('ip')
 const options = require('./option')
-const { app, http } = require('./app')
+const { app, server } = require('./app')
 const mimeType = require('./mime-type')
 const { resolve, readFile } = require('./utils')
-const { name, version } = require('../package')
-
-consola.info(`🚀 ${name} ${version}`)
 
 if (options.extendPath) {
   const extend = require(options.extendPath)
@@ -53,7 +50,9 @@ app.get('*', function (request, response) {
   redirect(`${options.distPath}${url}`, (mimeType[ext] || [])[1])
 })
 
-http.listen(options.httpPort, function () {
-  consola.success(`Listen at http://localhost:${options.httpPort}/`)
-  consola.success(`Listen at http://${ip.address()}:${options.httpPort}/`)
+server.listen(options.httpPort, function () {
+  const isHttps = !!options.https
+  const httpProto = isHttps ? 'https' : 'http'
+  if (!isHttps) consola.success(`Listen at http://localhost:${options.httpPort}/`)
+  consola.success(`Listen at ${httpProto}://${ip.address()}:${options.httpPort}/`)
 })
