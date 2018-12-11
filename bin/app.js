@@ -4,6 +4,10 @@ const fs = require('fs')
 const options = require('./option')
 const isHttps = !!options.https
 
+const {name, version} = require('../package')
+consola.info(`🚀 ${name} ${version}`)
+consola.info(`starting ${process.env.npm_package_name} ${process.env.npm_package_version}`)
+
 app.use(compression())
 
 const load = function (name, path) {
@@ -16,13 +20,19 @@ const load = function (name, path) {
   }
 }
 
-const { name, version } = require('../package')
-
-consola.info(`🚀 ${name} ${version}`)
-consola.info(`starting ${process.env.npm_package_name} ${process.env.npm_package_version}`)
-
 if (isHttps) {
   consola.success(`working in https mode`)
+  if (options.httpPort !== 80) {
+    // redirect http request to https
+    consola.success(`http request will be redirected https`)
+    const proxy = require('http').createServer(function (request, response) {
+      const host = request.headers.host
+      const redirect = `https://${request.headers.host}${/^\d+\.\d+\.\d+\.\d+$/.test(host) ? `:${options.httpPort}` : ''}${request.url}`
+      response.writeHead(301, {'Location': redirect})
+      response.end()
+    })
+    proxy.listen(80)
+  }
 }
 
 const server = isHttps ? require('https').createServer({
