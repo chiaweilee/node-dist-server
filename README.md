@@ -62,6 +62,16 @@ module.exports = function (app) {
 }
 ```
 
+#### --https
+
+default `false`
+
+#### --sslkey / --sslcert
+
+path of ssl key/cert file, should work with `--https`
+
+e.g, `rundist --port 443 --https --sslkey cert/localhost.key --sslcert cert/localhost.cert`
+
 #### compression
 
 `support`
