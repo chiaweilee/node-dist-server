@@ -16,7 +16,10 @@ const load = function (name, path) {
   }
 }
 
-consola.info(`🚀 ${process.env.npm_package_name} ${process.env.npm_package_version}`)
+const { name, version } = require('../package')
+
+consola.info(`🚀 ${name} ${version}`)
+consola.info(`starting ${process.env.npm_package_name} ${process.env.npm_package_version}`)
 
 if (isHttps) {
   consola.success(`working in https mode`)
