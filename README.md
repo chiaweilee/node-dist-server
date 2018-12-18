@@ -105,6 +105,3 @@ e.g, `rundist --port 443 --https --sslkey cert/localhost.key --sslcert cert/loca
   'mov': ['video/quicktime', 'binary', 'max-age=86400'],
   'wmv': ['video/x-ms-wmv', 'binary', 'max-age=86400']
 ```
-#### hot-load
-
-`not support yet`
