@@ -2,10 +2,10 @@
 
 const consola = require('consola')
 const ip = require('ip')
-const options = require('./option')
-const { app, server } = require('./app')
-const mimeType = require('./mime-type')
-const { resolve, readFile } = require('./utils')
+const options = require('../lib/option')
+const { app, server } = require('../lib/app')
+const mimeType = require('../lib/mime-type')
+const { resolve, readFile } = require('../lib/utils')
 
 if (options.extendPath) {
   const extend = require(options.extendPath)
