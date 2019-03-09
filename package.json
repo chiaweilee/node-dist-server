@@ -1,6 +1,6 @@
 {
   "name": "rundist",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "run your dist!",
   "main": "bin/dist-server.js",
   "bin": {
