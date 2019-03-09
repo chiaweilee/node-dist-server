@@ -20,18 +20,18 @@ if (options.extendPath) {
 app.get('*', (request, response) => {
   const url = request.originalUrl !== '/' ? request.originalUrl : `/${options.defaultPage}`;
   const [, name, ext] = (() => /\/([^/]+)\.([a-zA-Z0-9]+)$/gi.exec(url.split('?')[0]) || [])();
-  const redirect = function (url) {
-    readFile(resolve(url), (err, data) => {
+  const redirect = function (toUrl) {
+    readFile(resolve(toUrl), (err, data) => {
       if (err) {
         if (err.code === 'ENOENT') {
           // try url rewrite for vue-router history mode
-          readFile(resolve(`${options.distPath}${options.defaultPage}`), (err, data) => {
-            if (err) {
-              response.send(err);
+          readFile(resolve(`${options.distPath}${options.defaultPage}`), (_err, _data) => {
+            if (_err) {
+              response.send(_err);
               return;
             }
             response.writeHead(200, { 'content-type': 'text/html' });
-            response.write(data, 'utf8');
+            response.write(_data, 'utf8');
             response.end();
           });
           return; //
