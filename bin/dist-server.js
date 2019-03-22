@@ -25,7 +25,7 @@ app.get('*', (request, response) => {
       if (err) {
         if (err.code === 'ENOENT') {
           // try url rewrite for vue-router history mode
-          readFile(resolve(`${options.distPath}${options.defaultPage}`), (_err, _data) => {
+          readFile(resolve(`${options.distPath}/${options.defaultPage}`), (_err, _data) => {
             if (_err) {
               response.send(_err);
               return;
